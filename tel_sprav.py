@@ -11,8 +11,8 @@ def read_sprav():
         # print (n)
         dict_ = {
             "last_name": n[0],
-            "second_name": n[2],
             "first_name": n[1],
+            "second_name": n[2],            
             "tel": n[3],
         }
         # print(dict)
@@ -39,17 +39,26 @@ def print_sprav(tel_sprav):
     return None
 
 
-def add_contact(tel_sprav):
+def add_contact(tel_spra_ls):
     tel_sprav = open('tel_sprav.txt', 'a', encoding='utf-8')
     s = input("Введите ФИО, тел, резделенные пробелами: ")
     ls_s = s.split() # Делаю список, чтобы к каждому слову присенить / capitalize() /
     print(ls_s)
-    for item in ls_s:
-        tel_sprav.write(f'{item.capitalize()} ')
+    for i in range(len(ls_s)):
+        ls_s[i] = ls_s[i].capitalize()
+        tel_sprav.write(f'{ls_s[i]} ')
+    tel_sprav.write('\n')
 
-    
+    dict_ = {
+        "last_name": ls_s[0],        
+        "first_name": ls_s[1],
+        "second_name":ls_s[2],
+        "tel": ls_s[3],
+        }
+    tel_spra_ls.append(dict_)
+    # print (tel_spra_ls)       
     # ToDo: использовать str.capitalize()
-    # tel_sprav.write(f'{s}\n')
+
     tel_sprav.close()
     return tel_sprav
 
