@@ -2,22 +2,16 @@ def read_sprav():
     sprav = []
     path = 'tel_sprav.txt'
     tel_sprav = open(path, 'r', encoding='utf-8')
-
-    # content = tel_sprav.read()   # Вариант-2
-    # print(content)
-    # print(type(content))
     for line in tel_sprav:
         n = line.split()
-        print (n)
+        # print (n)
         dict_ = {
             "last_name": n[0],
             "first_name": n[1],
             "second_name": n[2],            
             "tel": n[3],
         }
-        # print(dict)
         sprav.append(dict_)
-        # print(sprav)
 
     """Альтернативный вариант"""
     # headers = ['last_name', 'first_name', 'second_name', 'tel']
@@ -32,9 +26,7 @@ def read_sprav():
 def print_sprav(tel_sprav):
     for item in tel_sprav:
          print(*(f"{v}" for v in item.values()))
-        # print(*(f"{k}: {v}" for k, v in item.items()))
-        # print(*(f"обычный текст до {v} и после" for v in item.values()))
-        # print(item['last_name'], item['first_name'], item['second_name'], item['tel'])
+
 
     return None
 
@@ -46,7 +38,7 @@ def add_contact(tel_spra_ls):
     print(ls_s)
     for i in range(len(ls_s)):
         ls_s[i] = ls_s[i].capitalize()
-        tel_sprav.write(f'{ls_s[i]} ')
+        # tel_sprav.write(f'{ls_s[i]} ')
     tel_sprav.write('\n')
 
     dict_ = {
@@ -60,13 +52,14 @@ def add_contact(tel_spra_ls):
     # ToDo: использовать str.capitalize()
 
     tel_sprav.close()
-    return tel_spra_ls
+    return None
 
 
 def find_last_name(last_name: str, my_sprav):
     for item in my_sprav:
         if item["last_name"] == last_name.capitalize() or item["first_name"] == last_name.capitalize() or item["second_name"] == last_name.capitalize():
             print(*(f"{v}" for v in item.values()))
+    return None
 
 
 def change_human (tel_spra_ls):
@@ -74,7 +67,6 @@ def change_human (tel_spra_ls):
     for index, item in enumerate(tel_spra_ls):
          print(*(f"{index+1} {v}" for v in item.values()))
     number = int(input())-1
-    print(number)
     dict_ = {                                            # Попробуй разобраться почему не работает
         "last_name": input('Введите фамилию\t').capitalize(),        
         "first_name": input('Введите имя\t').capitalize(),
@@ -94,13 +86,23 @@ def change_human (tel_spra_ls):
         tel_sprav.write(f" \n")
  
     tel_sprav.close()
+    return None
+
+def copy_human (tel_spra_ls):
+    print("Введите номер человека, которого хотите скопировать")
+    for index, item in enumerate(tel_spra_ls):
+         print(*(f"{index+1} {v}" for v in item.values()))
+    number = int(input())-1
+    tel_sprav = open('new_tel_sprav.txt', 'a', encoding='utf-8')
+    for val in tel_spra_ls[number].values():
+        tel_sprav.write(f"{val}\t")
+    tel_sprav.write(f" \n")
+    tel_sprav.close()
+    return None
 
 
 
 
-
-
-    return (tel_spra_ls)
 
 def main():
     # переменная = open ('название файла', 'режим работы', encoding='кодировка')
@@ -110,6 +112,7 @@ def main():
         print("2: Записать новый контакт")
         print("3: Найти контакт по фамилии")
         print("4: Заменить контакт")
+        print("5: Копировать контакт в новый справочник")
         print("0: Выйти")
 
         x = input()
@@ -120,10 +123,13 @@ def main():
             add_contact(tel_sprav)
         elif x == "3":
             find_last_name(input("Введите фамилию: "), my_sprav=tel_sprav)
-        elif x == "0":
-            break
         elif x == "4":
             change_human(tel_sprav)
+        elif x == "5":
+            copy_human(tel_sprav)
+        elif x == "0":
+            break
+
                     
         else:
             print("неверная команда")
